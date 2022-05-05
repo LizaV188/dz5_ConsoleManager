@@ -46,18 +46,32 @@ while True:
     elif choice == '2':     # удалить пвпку
         name = input('Введите название папки или папки: ')
         if os.path.isdir(name):
-            os.rmdir(name)
+            shutil.rmtree(name)
         elif os.path.isfile(name):
             os.remove(name)
         else:
             print(f'Нет файла или папки с именем {name}')
     elif choice == '3':
-        dir_old = input('Введите название папки или файла, который надо скопировать: ')
-        dir_new = input('Введите новое название: ')
-        shutil.copy(dir_old,dir_new)
-#        shutil.copytree(dir_old, dir_new)
+        name_old = input('Введите название папки или файла, который надо скопировать: ')
+        if not os.path.exists(name_old):
+            print(f'Копирование невозможно, так как {name_old} не существует')
+        else:
+            name_new = input('Введите новое название: ')
+            if my_f.check_dir_name(name_new):
+                print(f'Копирование невозможно, так как {name_new} создать нельзя')
+            elif os.path.exists(name_new):
+                print(f'Копирование невозможно, так как {name_new} существует')
+            else:
+                if os.path.isfile(name_old):
+                    shutil.copy(name_old, name_new)
+                else:
+                    shutil.copytree(name_old, name_new)
     elif choice == '4':
-        pass
+#        print(os.walk(os.getcwd()))
+#        print(os.getcwd())
+#        for root, dirs, files in os.walk(os.getcwd()):
+#            print(root, dirs, files)
+        print(os.listdir())
     elif choice == '5':
         pass
     elif choice == '6':
