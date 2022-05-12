@@ -19,6 +19,17 @@ import shutil
 
 import my_function as my_f
 
+def list_items(f='all'):
+# вывод содержимого текущей папки - только файлы, только папки, все
+#    rez_list = [i for i in os.listdir() if os.path.isfile(i)]
+
+    rez_list = list(filter(os.path.isdir, os.listdir()))
+    for i in rez_list:
+        print(i)
+    # print(f'содержимое рабочей директории {os.getcwd()}')
+    # for i in os.listdir():
+    #     print(i)
+
 while True:
     print('1. Создать папку')
     print('2. Удалить (файл/папку)')
@@ -67,13 +78,12 @@ while True:
                 else:
                     shutil.copytree(name_old, name_new)
     elif choice == '4':
-#        print(os.walk(os.getcwd()))
-#        print(os.getcwd())
-#        for root, dirs, files in os.walk(os.getcwd()):
-#            print(root, dirs, files)
-        print(os.listdir())
+        list_items()
+        # print(f'содержимое рабочей директории {os.getcwd()}')
+        # for i in os.listdir():
+        #     print(i)
     elif choice == '5':
-        pass
+        list_items('dir')
     elif choice == '6':
         pass
     elif choice == '7':
