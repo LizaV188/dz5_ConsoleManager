@@ -14,13 +14,55 @@
 - выход.
 
 '''
+
 import os
 import shutil
-
+import platform
+import sys
 import my_function as my_f
 
+sys.path.append(r'C:\Users\lenovo\PycharmProjects\dz4')
+from borndayforewer import vict_1
+import use_function
+
+author = 'Liza V'
+
+def create_dir():
+    dir_name = input('Введите название новой папки: ')
+    if os.path.exists(dir_name):
+        print(f'Название {dir_name} уже существует')
+    elif my_f.check_dir_name(dir_name):
+        print(f'Папку с именем {dir_name} создать нельзя')
+    else:
+        print('mkdir', dir_name)
+        os.mkdir(dir_name)
+
+def del_dir():
+    name = input('Введите название папки или папки: ')
+    if os.path.isdir(name):
+        shutil.rmtree(name)
+    elif os.path.isfile(name):
+        os.remove(name)
+    else:
+        print(f'Нет файла или папки с именем {name}')
+
+def copy_dir_file():
+    name_old = input('Введите название папки или файла, который надо скопировать: ')
+    if not os.path.exists(name_old):
+        print(f'Копирование невозможно, так как {name_old} не существует')
+    else:
+        name_new = input('Введите новое название: ')
+        if my_f.check_dir_name(name_new):
+            print(f'Копирование невозможно, так как {name_new} создать нельзя')
+        elif os.path.exists(name_new):
+            print(f'Копирование невозможно, так как {name_new} существует')
+        else:
+            if os.path.isfile(name_old):
+                shutil.copy(name_old, name_new)
+            else:
+                shutil.copytree(name_old, name_new)
+
 def list_items(f):
-    rez_list=[]
     if f == 'dir':
         print(f'ПАПКИ в рабочей директории {os.getcwd()}:')
         rez_list = list(filter(os.path.isdir, os.listdir()))
@@ -50,38 +92,12 @@ while True:
     print('12. Выход')
 
     choice = input('Выберите пункт меню ')
-    if choice == '1':       # создать папку
-        dir_name = input('Введите название новой папки: ')
-        if os.path.exists(dir_name):
-            print(f'Название {dir_name} уже существует')
-        elif my_f.check_dir_name(dir_name):
-            print(f'Папку с именем {dir_name} создать нельзя')
-        else:
-            print('mkdir', dir_name)
-            os.mkdir(dir_name)
-    elif choice == '2':     # удалить пвпку
-        name = input('Введите название папки или папки: ')
-        if os.path.isdir(name):
-            shutil.rmtree(name)
-        elif os.path.isfile(name):
-            os.remove(name)
-        else:
-            print(f'Нет файла или папки с именем {name}')
-    elif choice == '3':
-        name_old = input('Введите название папки или файла, который надо скопировать: ')
-        if not os.path.exists(name_old):
-            print(f'Копирование невозможно, так как {name_old} не существует')
-        else:
-            name_new = input('Введите новое название: ')
-            if my_f.check_dir_name(name_new):
-                print(f'Копирование невозможно, так как {name_new} создать нельзя')
-            elif os.path.exists(name_new):
-                print(f'Копирование невозможно, так как {name_new} существует')
-            else:
-                if os.path.isfile(name_old):
-                    shutil.copy(name_old, name_new)
-                else:
-                    shutil.copytree(name_old, name_new)
+    if choice == '1':  # создать папку
+        create_dir()
+    elif choice == '2':  # удалить пвпку
+        del_dir()
+    elif choice == '3': #копирование файла или папки
+        copy_dir_file()
     elif choice == '4':
         list_items('all')
     elif choice == '5':
@@ -89,24 +105,18 @@ while True:
     elif choice == '6':
         list_items('files')
     elif choice == '7':
-
-        for root, dirs, files in os.walk(os.getcwd()):
-            print(root, dirs, files)
-
-        # for address, dirs, files in os.walk(os.getcwd()):
-        #     for name in files:
-        #         print(os.path.join(address, name))
-
+        print(f'Ваша операционная система: {platform.system()}')
     elif choice == '8':
-        ll = os.walk(os.getcwd())
-        print ([i for i in ll])
-
+        print(f'Создатель программы: ', author)
     elif choice == '9':
-                pass
+        vict_1()
     elif choice == '10':
-        pass
+        use_function.personal_acc()
     elif choice == '11':
-        pass
+        print(f'Текущая директория: {os.getcwd()}')
+        new_dir = input('Введите новую директорию: ')
+        os.chdir(new_dir)
+        print(f'Текущая директория: {os.getcwd()}')
     elif choice == '12':
         break
     else:
