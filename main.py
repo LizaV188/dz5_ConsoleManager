@@ -29,10 +29,10 @@ author = 'Liza V'
 
 def create_dir():
     dir_name = input('Введите название новой папки: ')
-    if os.path.exists(dir_name):
-        print(f'Название {dir_name} уже существует')
-    elif my_f.check_dir_name(dir_name):
+    if my_f.check_dir_name(dir_name):
         print(f'Папку с именем {dir_name} создать нельзя')
+    elif os.path.exists(dir_name):
+        print(f'Название {dir_name} уже существует')
     else:
         print('mkdir', dir_name)
         os.mkdir(dir_name)
