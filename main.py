@@ -39,6 +39,7 @@ def create_dir():
 
 def del_dir():
     name = input('Введите название папки или папки: ')
+#проверка на папку или файл
     if os.path.isdir(name):
         shutil.rmtree(name)
     elif os.path.isfile(name):
